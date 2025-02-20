@@ -1,0 +1,46 @@
+<header class="navbar navbar-expand-md d-print-none">
+  <div class="container-xl">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
+      <a href="javascript:void(0)">
+        Tyto Services
+      </a>
+    </div>
+    <ul class="navbar-nav">
+      @for(menu of menus; track menu.name){
+        <li class="nav-item" routerLinkActive="nav-item active">
+          <a class="nav-link" [routerLink]="menu.route">
+            <span class="nav-link-icon">
+              <i class="ti ti-{{ menu.icon }}"></i>
+            </span>
+            <span class="nav-link-title">
+              {{ menu.name }}
+            </span>
+          </a>
+        </li>
+
+      }
+
+
+    </ul>
+    <div class="navbar-nav flex-row order-md-last ms-auto">
+      <div class="nav-item dropdown">
+        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+          <span class="avatar avatar-sm" style="background-image: url(...)"></span>
+          <div class="d-none d-xl-block ps-2">
+            <div>Paweł Kuna</div>
+            <div class="mt-1 small text-secondary">UI Designer</div>
+          </div>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+          <a href="./profile.html" class="dropdown-item">Profile</a>
+          <div class="dropdown-divider"></div>
+          <a href="./settings.html" class="dropdown-item">Settings</a>
+          <a href="./sign-in.html" class="dropdown-item">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
