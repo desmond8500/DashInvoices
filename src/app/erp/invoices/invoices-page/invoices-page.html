@@ -3,7 +3,11 @@
 
     @for(month of months; track month.value){
       <div class="mb-2">
-        <a class="btn btn-primary w-100" (click)="getMonth(month.value, 2025, month)">{{ month.label+` 2025` }}</a>
+        @if(month.label ==  mois()) {
+          <a class="btn btn-outline-primary w-100" (click)="getMonth(month.value, 2025, month)">{{ month.label+` 2025` }}</a>
+        }@else {
+          <a class="btn btn-primary w-100" (click)="getMonth(month.value, 2025, month)">{{ month.label+` 2025` }}</a>
+        }
       </div>
     }
     <div class="mb-2">
@@ -14,17 +18,22 @@
 
   <div class="col">
     <div class="card card-body text-center mb-3">
-      <div class="display-6">Factures de {{ mois() }} 2025 </div>
+      <div class="d-flex justify-content-between fs-3" >
+        <div>Factures de {{ mois() }} 2025 </div>
+        <div>
+          {{ total() | number }} F
+        </div>
+      </div>
     </div>
     <div class="row row-deck g-2">
       @for(facture of factures().data; track facture.id){
-        <a [href]="facture.folder" target="_blank" class="col-md-3" style="text-decoration: none;">
+        <a [href]="facture.folder" target="_blank" class="col-md-4 " style="text-decoration: none;">
           <app-invoice-card [facture]="facture"></app-invoice-card>
         </a>
       } @empty {
         @if (deposits()) {
           @for(deposit of deposits().data; track deposit.id){
-            <a [href]="deposit.folder" target="_blank" class="col-md-3" style="text-decoration: none;">
+            <a [href]="deposit.folder" target="_blank" class="col-md-4 " style="text-decoration: none;">
               <app-invoice-card [facture]="deposit"></app-invoice-card>
             </a>
             }
@@ -38,14 +47,9 @@
               <div class="mt-2">Veuillez sélectionner un mois</div>
             </div>
           </div>
-
         }
-
-
       }
     </div>
-    <div class="card card-body text-end mt-3 display-6">
-      Total facturé: {{ total() | number }} F
-    </div>
+
   </div>
 </div>
