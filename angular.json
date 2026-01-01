@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "Dash3dFactures": {
+    "Dash3Factures": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -56,10 +56,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "Dash3dFactures:build:production"
+              "buildTarget": "Dash3Factures:build:production"
             },
             "development": {
-              "buildTarget": "Dash3dFactures:build:development"
+              "buildTarget": "Dash3Factures:build:development"
             }
           },
           "defaultConfiguration": "development"
