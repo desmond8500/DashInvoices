@@ -2,10 +2,11 @@ import { Component, inject, signal } from '@angular/core';
 import { InvoiceService } from '../invoice-service';
 import { MainService } from '../../../services/main-service';
 import { InvoiceCard } from '../invoice-card/invoice-card';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-invoices-page',
-  imports: [InvoiceCard],
+  imports: [InvoiceCard, CommonModule],
   templateUrl: './invoices-page.html',
   styleUrl: './invoices-page.css',
 })
@@ -17,6 +18,7 @@ export class InvoicesPage {
   factures = signal<any>('');
   deposits = signal<any>('');
   total = signal<any>('');
+  mois = signal<any>('');
 
   months = [
     { label: 'Janvier', value: 1 },
@@ -44,11 +46,13 @@ export class InvoicesPage {
     { label: 'Décembre', value: 12 },
   ];
 
-  getMonth(month: any, year: number) {
+  getMonth(month: any, year: number, mois: any) {
     this.invoice_service.get_invoices(month, year).subscribe({
       next: (value) => {
         this.factures.set(value);
-        //  console.log('facture' + value);
+        const total = this.factures().data.reduce((acc: any, facture: any) => acc + facture.montant, 0);
+        this.total.set(total);
+        this.mois.set(mois.label);
         this.title.set(this.months[month - 1].label);
       },
       error: (err) => console.error(err),
