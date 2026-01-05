@@ -1,6 +1,7 @@
 <div class="row g-2">
   <div class="col-auto">
 
+    <a class="btn btn-secondary mb-2 w-100" (click)="main()">Resumé 2025</a>
     @for(month of months; track month.value){
       <div class="mb-2">
         @if(month.label ==  mois()) {
@@ -17,15 +18,40 @@
   </div>
 
   <div class="col">
-    <div class="card card-body text-center mb-3">
-      <div class="d-flex justify-content-between fs-3" >
-        <div>Factures de {{ mois() }} 2025 </div>
-        <div>
-          {{ total() | number }} F
+
+    @if(resume()) {
+      <div class="row row-deck g-2">
+        <div class="col">
+          <app-resume-card [name]="'Factures Payées 2025'" [content]="resume().data.total_paid | number: '1.0-0'"></app-resume-card>
+        </div>
+        <div class="col">
+          <app-resume-card [name]="'Acomptes Payées 2025'" [content]="acomptes().data.total_paid | number: '1.0-0'"></app-resume-card>
+        </div>
+        <div class="col">
+          <app-resume-card [name]="'Total Factures Payées 0025'" [content]="(resume().data.total_paid + acomptes().data.total_paid) | number: '1.0-0'"></app-resume-card>
+        </div>
+        <div class="col">
+          <app-resume-card [name]="'Taxes 2025'" [content]="(resume().data.total_paid + acomptes().data.total_paid)*0.05 | number: '1.0-0'"></app-resume-card>
         </div>
       </div>
-    </div>
+
+    }
+
+
     <div class="row row-deck g-2">
+      @if (factures().data) {
+        <div class="col-md-12">
+          <div class="card card-body text-center mb-3">
+            <div class="d-flex justify-content-between fs-3" >
+              <div>Factures de {{ mois() }} 2025 </div>
+              <div>
+                {{ total() | number }} F
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+
       @for(facture of factures().data; track facture.id){
         <a [href]="facture.folder" target="_blank" class="col-md-4 " style="text-decoration: none;">
           <app-invoice-card [facture]="facture"></app-invoice-card>

@@ -12,7 +12,6 @@ export class InvoiceService {
   get_invoices(month: number, year: number) {
     let data = {
       month: month,
-
       year: year,
     };
 
@@ -22,10 +21,21 @@ export class InvoiceService {
   get_deposit(month: number, year: number) {
     let data = {
       month: month,
-
       year: year,
     };
 
     return this.http.post(this.apiUrl + '/get_month_deposit', data);
+  }
+
+  get_annual_invoices(year: number) {
+    let data = { year: year, };
+
+    return this.http.post(this.apiUrl + '/annual_paid_invoices', data);
+  }
+
+  get_annual_deposit(year: number) {
+    let data = { year: year, };
+
+    return this.http.post(this.apiUrl + '/get_annual_invoices_deposit', data);
   }
 }

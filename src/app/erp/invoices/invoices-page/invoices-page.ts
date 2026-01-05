@@ -3,10 +3,11 @@ import { InvoiceService } from '../invoice-service';
 import { MainService } from '../../../services/main-service';
 import { InvoiceCard } from '../invoice-card/invoice-card';
 import { CommonModule } from '@angular/common';
+import { ResumeCard } from '../../../layouts/cards/resume-card/resume-card';
 
 @Component({
   selector: 'app-invoices-page',
-  imports: [InvoiceCard, CommonModule],
+  imports: [InvoiceCard, CommonModule, ResumeCard],
   templateUrl: './invoices-page.html',
   styleUrl: './invoices-page.css',
 })
@@ -19,6 +20,8 @@ export class InvoicesPage {
   deposits = signal<any>('');
   total = signal<any>('');
   mois = signal<any>('');
+  resume = signal<any>('');
+  acomptes = signal<any>('');
 
   months = [
     { label: 'Janvier', value: 1 },
@@ -46,6 +49,10 @@ export class InvoicesPage {
     { label: 'Décembre', value: 12 },
   ];
 
+  ngOnInit() {
+    this.main();
+  }
+
   getMonth(month: any, year: number, mois: any) {
     this.invoice_service.get_invoices(month, year).subscribe({
       next: (value) => {
@@ -69,5 +76,34 @@ export class InvoicesPage {
       },
       error: (err) => console.error(err),
     });
+  }
+
+  get_resume() {
+    this.invoice_service.get_annual_invoices(2025).subscribe({
+      next: (value) => {
+        this.factures.set([]);
+        this.deposits.set([]);
+        this.resume.set(value);
+        console.log('factures'+ value.toString());
+
+      },
+      error: (err) => console.error(err),
+    });
+  }
+  get_acompte() {
+    this.invoice_service.get_annual_deposit(2025).subscribe({
+      next: (value) => {
+        this.factures.set([]);
+        this.deposits.set([]);
+        this.acomptes.set(value);
+        console.log('acomptes' + value);
+      },
+      error: (err) => console.error(err),
+    });
+  }
+
+  main(){
+    this.get_acompte();
+    this.get_resume();
   }
 }
